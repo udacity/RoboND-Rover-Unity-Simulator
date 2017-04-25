@@ -1,0 +1,26 @@
+ # Unity generated
+Builds/
+Temp/
+Library/
+obj/
+
+# Visual Studio / MonoDevelop generated
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.userprefs
+
+# OS generated
+.DS_Store
+
+# Jetbrains Rider
+.idea
+
+# Recorded Data
+IMG
+driving_log.csv
+Archive.zip
+sdc.app
+Contact GitHub API Training Shop Blog About
+© 2017 GitHub, Inc. Terms Privacy Security Status Help
