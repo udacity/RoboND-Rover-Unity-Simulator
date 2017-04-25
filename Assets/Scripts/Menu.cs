@@ -7,11 +7,9 @@ public class Menu : MonoBehaviour
 	public Canvas canvas;
 	public FPSRobotInput playerInput;
 	public TrainingUI trainingUI;
-	public ShowHideURIInput rosUI;
 
 	public GameObject socketObject;
 	public GameObject serverObject;
-	public GameObject rosObject;
 
 	RobotRemoteControl remoteControl;
 
@@ -23,7 +21,6 @@ public class Menu : MonoBehaviour
 	void Start ()
 	{
 		EnableCanvas ();
-		rosUI.enabled = false;
 	}
 
 	void LateUpdate ()
@@ -48,13 +45,11 @@ public class Menu : MonoBehaviour
 		{
 			socketObject.SetActive ( false );
 			serverObject.SetActive ( false );
-			rosObject.SetActive ( false );
 
 			playerInput.DisableFocus = false;
 			playerInput.Focus ();
 			remoteControl.enabled = false;
 			trainingUI.SetTrainingMode ( true );
-			trainingUI.showROSStatus = false;
 		}
 
 		// autonomous
@@ -62,7 +57,6 @@ public class Menu : MonoBehaviour
 		{
 			socketObject.SetActive ( true );
 			serverObject.SetActive ( true );
-			rosObject.SetActive ( false );
 
 			playerInput.controllable = false;
 			remoteControl.enabled = true;
@@ -70,22 +64,6 @@ public class Menu : MonoBehaviour
 			playerInput.DisableFocus = false;
 			trainingUI.SetTrainingMode ( false );
 			playerInput.controller.transform.eulerAngles = new Vector3 ( 0, Random.Range ( 0f, 360f ), 0 );
-			trainingUI.showROSStatus = false;
-		}
-
-		// ros
-		if ( mode == 2 )
-		{
-			socketObject.SetActive ( false );
-			serverObject.SetActive ( false );
-			rosObject.SetActive ( true );
-
-			playerInput.DisableFocus = false;
-			playerInput.Focus ();
-			remoteControl.enabled = true;
-			trainingUI.SetTrainingMode ( false );
-			trainingUI.showROSStatus = true;
-			rosUI.enabled = true;
 		}
 
 		playerInput.controller.SwitchCamera ();
