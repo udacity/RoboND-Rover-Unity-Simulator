@@ -24,6 +24,8 @@ public class RoverController : IRobotController
 	public float cameraDefaultFOV = 60;
 	public float cameraMinFOV;
 	public float cameraMaxFOV;
+	public float cameraMinDistance = 0.5f;
+	public float cameraMaxDistance = 25;
 
 	public float maxReverseSpeed = 2f;
 	public float acceleration = 2.5f;
@@ -387,15 +389,19 @@ public class RoverController : IRobotController
 
 	public override void ZoomCamera (float amount)
 	{
-		camera.fieldOfView += amount * cameraZoomSpeed;
-		camera.fieldOfView = Mathf.Clamp ( camera.fieldOfView, cameraMinFOV, cameraMaxFOV );
+		Vector3 pos = camera.transform.localPosition;
+		pos.z = Mathf.Clamp ( pos.z - amount * cameraZoomSpeed, -cameraMaxDistance, cameraMinDistance );
+		camera.transform.localPosition = pos;
+//		camera.fieldOfView += amount * cameraZoomSpeed;
+//		camera.fieldOfView = Mathf.Clamp ( camera.fieldOfView, cameraMinFOV, cameraMaxFOV );
 	}
 
 	public override void ResetZoom ()
 	{
-		camera.fieldOfView = cameraDefaultFOV;
-		// this has issues in standalone for some reason...
-//		camera.ResetFieldOfView ();
+		Vector3 pos = camera.transform.localPosition;
+		pos.z = 0;
+		camera.transform.localPosition = pos;
+//		camera.fieldOfView = cameraDefaultFOV;
 	}
 
 	public override void SwitchCamera ()
