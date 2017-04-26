@@ -82,7 +82,7 @@ public class FPSRobotInput : MonoBehaviour
 				float hMove = Mathf.Clamp ( keyH + hMouseMove, -1f, 1f );
 				controller.Rotate ( hMove );
 			}
-			controller.RotateCamera ( 0, mouseY );
+//				controller.RotateCamera ( 0, mouseY );
 //			else
 //			if ( !isTrainingMode )
 //				controller.RotateCamera ( mouseX, mouseY );
