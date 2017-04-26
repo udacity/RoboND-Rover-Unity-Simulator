@@ -47,6 +47,7 @@ public abstract class IRobotController : MonoBehaviour
 	public Transform cameraVAxis;
 	public Transform fpsPosition;
 	public Transform tpsPosition;
+	public Transform tpsParent;
 	public Transform actualCamera;
 	public Camera camera;
 	public Camera recordingCam;

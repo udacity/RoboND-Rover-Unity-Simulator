@@ -379,12 +379,30 @@ public class RoverController : IRobotController
 			cameraVAxis.localEulerAngles = euler;
 		} else
 		{
-			tpsPosition.RotateAround ( robotBody.position, Vector3.up, horizontal * cameraRotateSensitivity );
-			tpsPosition.RotateAround ( robotBody.position, tpsPosition.right, -vertical * cameraRotateSensitivity );
-			Vector3 euler = tpsPosition.localEulerAngles;
+			tpsParent.Rotate ( Vector3.up * horizontal * cameraRotateSensitivity);
+			Vector3 euler = tpsParent.localEulerAngles;
+			euler.x -= vertical * cameraRotateSensitivity;
+			if ( euler.x > 270 )
+				euler.x -= 360;
+			euler.x = Mathf.Clamp ( euler.x, cameraMinAngle, cameraMaxAngle );
 			euler.z = 0;
-//			euler.y = euler.z = 0;
-			tpsPosition.localEulerAngles = euler;
+			tpsParent.localEulerAngles = euler;
+
+
+//			tpsPosition.RotateAround ( robotBody.position, Vector3.up, horizontal * cameraRotateSensitivity );
+//			Vector3 euler = tpsPosition.localEulerAngles;
+//			vertical = -vertical * cameraRotateSensitivity;
+//			if ( euler.x + vertical > cameraMaxAngle )
+//				vertical = cameraMaxAngle - euler.x;
+//			else
+//			if ( euler.x + vertical < cameraMinAngle )
+//				vertical = cameraMinAngle - euler.x;
+//			
+//			tpsPosition.RotateAround ( robotBody.position, tpsPosition.right, vertical );
+//			euler = tpsPosition.localEulerAngles;
+//			euler.z = 0;
+////			euler.y = euler.z = 0;
+//			tpsPosition.localEulerAngles = euler;
 		}
 	}
 
