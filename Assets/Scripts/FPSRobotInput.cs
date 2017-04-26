@@ -83,9 +83,9 @@ public class FPSRobotInput : MonoBehaviour
 				controller.Rotate ( hMove );
 			}
 //				controller.RotateCamera ( 0, mouseY );
-//			else
+			else
 //			if ( !isTrainingMode )
-//				controller.RotateCamera ( mouseX, mouseY );
+				controller.RotateCamera ( mouseX, mouseY );
 
 			// check for camera zoom
 			float wheel = Input.GetAxis ( "Mouse ScrollWheel" );
@@ -155,11 +155,21 @@ public class FPSRobotInput : MonoBehaviour
 //			Physics.Raycast (  )
 		} else
 		{
-			// check for rotation input
-			float mouseX = Input.GetAxis ( "Mouse X" );
-			float mouseY = Input.GetAxis ( "Mouse Y" );
 			if ( !isTrainingMode )
-				controller.RotateCamera ( mouseX, mouseY );
+			{
+				// check for rotation input
+				float mouseX = Input.GetAxis ( "Mouse X" );
+				float mouseY = Input.GetAxis ( "Mouse Y" );
+					controller.RotateCamera ( mouseX, mouseY );
+				// check for camera zoom
+				float wheel = Input.GetAxis ( "Mouse ScrollWheel" );
+				if ( wheel != 0 )
+					controller.ZoomCamera ( -wheel );
+
+				// check to reset zoom
+				if ( Input.GetMouseButtonDown ( 2 ) )
+					controller.ResetZoom ();
+			}
 			braking = false;
 		}
 		// check for sample pickup
