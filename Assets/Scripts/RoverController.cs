@@ -26,6 +26,7 @@ public class RoverController : IRobotController
 	public float cameraMaxFOV;
 	public float cameraMinDistance = 0.5f;
 	public float cameraMaxDistance = 25;
+	public float cameraRotateSensitivity = 1f;
 
 	public float maxReverseSpeed = 2f;
 	public float acceleration = 2.5f;
@@ -369,17 +370,17 @@ public class RoverController : IRobotController
 	{
 		if ( curCamera == 0 )
 		{
-			cameraHAxis.Rotate ( Vector3.up * horizontal );
+			cameraHAxis.Rotate ( Vector3.up * horizontal * cameraRotateSensitivity );
 			Vector3 euler = cameraVAxis.localEulerAngles;
-			euler.x -= vertical;
+			euler.x -= vertical * cameraRotateSensitivity;
 			if ( euler.x > 270 )
 				euler.x -= 360;
 			euler.x = Mathf.Clamp ( euler.x, cameraMinAngle, cameraMaxAngle );
 			cameraVAxis.localEulerAngles = euler;
 		} else
 		{
-			tpsPosition.RotateAround ( robotBody.position, Vector3.up, horizontal );
-			tpsPosition.RotateAround ( robotBody.position, tpsPosition.right, -vertical );
+			tpsPosition.RotateAround ( robotBody.position, Vector3.up, horizontal * cameraRotateSensitivity );
+			tpsPosition.RotateAround ( robotBody.position, tpsPosition.right, -vertical * cameraRotateSensitivity );
 			Vector3 euler = tpsPosition.localEulerAngles;
 			euler.z = 0;
 //			euler.y = euler.z = 0;
