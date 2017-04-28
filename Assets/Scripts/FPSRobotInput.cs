@@ -45,11 +45,11 @@ public class FPSRobotInput : MonoBehaviour
 				grid.enabled = !grid.enabled;
 		}
 
-		if ( Input.GetKeyDown ( KeyCode.O ) )
-		{
-			if ( objectiveParent != null )
-				objectiveParent.SetActive ( !objectiveParent.activeSelf );
-		}
+//		if ( Input.GetKeyDown ( KeyCode.O ) )
+//		{
+//			if ( objectiveParent != null )
+//				objectiveParent.SetActive ( !objectiveParent.activeSelf );
+//		}
 
 		if ( DisableFocus )
 			return;
