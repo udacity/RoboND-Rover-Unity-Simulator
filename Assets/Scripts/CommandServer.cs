@@ -5,6 +5,7 @@ using SocketIO;
 using System;
 using System.Security.AccessControl;
 using UnityEngine.UI;
+using System.Text;
 
 public class CommandServer : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class CommandServer : MonoBehaviour
 		_socket.On("manual", onManual);
 		_socket.On ( "fixed_turn", OnFixedTurn );
 		_socket.On ( "pickup", OnPickup );
-		_socket.On ( "get_samples", GetSamplePositions );
+//		_socket.On ( "get_samples", GetSamplePositions );
 		robotController = robotRemoteControl.robot;
 		frontFacingCamera = robotController.recordingCam;
 		inset1Tex = new Texture2D ( 1, 1 );
@@ -36,13 +37,13 @@ public class CommandServer : MonoBehaviour
 		inset3Tex = new Texture2D ( 1, 1 );
 	}
 
-	void Update ()
+/*	void Update ()
 	{
 		if ( Input.GetKeyDown ( KeyCode.P ) )
 		{
 			GetSamplePositions ( null );
 		}
-	}
+	}*/
 
 	void OnOpen(SocketIOEvent obj)
 	{
@@ -187,6 +188,20 @@ public class CommandServer : MonoBehaviour
 			data["fixed_turn"] = robotController.IsTurningInPlace ? "1" : "0";
 			data["near_sample"] = robotController.IsNearObjective ? "1" : "0";
 			data["picking_up"] = robotController.IsPickingUpSample ? "1" : "0";
+			data["sample_count"] = ObjectiveSpawner.samples.Length.ToString ();
+
+			StringBuilder sample_x = new StringBuilder ();
+			StringBuilder sample_y = new StringBuilder ();
+			for (int i = 0; i <ObjectiveSpawner.samples.Length; i++)
+			{
+				GameObject go = ObjectiveSpawner.samples[i];
+				sample_x.Append ( go.transform.position.x.ToString ("N2") + "," );
+				sample_y.Append ( go.transform.position.z.ToString ("N2") + "," );
+			}
+			sample_x.Remove (sample_x.Length - 1, 1);
+			sample_y.Remove (sample_y.Length - 1, 1);
+			data["samples_x"] = sample_x.ToString ();
+			data["samples_y"] = sample_y.ToString ();
 			data["image"] = Convert.ToBase64String(CameraHelper.CaptureFrame(frontFacingCamera));
 
 //			Debug.Log ("sangle " + data["steering_angle"] + " vert " + data["vert_angle"] + " throt " + data["throttle"] + " speed " + data["speed"] + " image " + data["image"]);
@@ -194,7 +209,7 @@ public class CommandServer : MonoBehaviour
 		});
 	}
 
-	void GetSamplePositions (SocketIOEvent obj)
+/*	void GetSamplePositions (SocketIOEvent obj)
 	{
 		UnityMainThreadDispatcher.Instance ().Enqueue ( () =>
 		{
@@ -225,5 +240,5 @@ public class CommandServer : MonoBehaviour
 //				Debug.Log ("key: " + pair.Key + " value: " + pair.Value + "\n");
 			_socket.Emit ("sample_positions", new JSONObject(data));
 		} );
-	}
+	}*/
 }
