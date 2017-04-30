@@ -139,10 +139,10 @@ public class FPSRobotInput : MonoBehaviour
 //				controller.Move ( forward );
 			}
 
-			if ( Input.GetKeyDown ( KeyCode.Space ) )
-			{
-				controller.FixedTurn ( 180, 3 );
-			}
+//			if ( Input.GetKeyDown ( KeyCode.Space ) )
+//			{
+//				controller.FixedTurn ( 180, 3 );
+//			}
 
 			// check for camera switch key
 			if ( Input.GetKeyDown ( KeyCode.Tab ) )
