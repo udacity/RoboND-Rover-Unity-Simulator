@@ -84,7 +84,7 @@ public class FPSRobotInput : MonoBehaviour
 				controller.Rotate ( hMove );
 
 				if ( isRMBDown )
-					controller.RotateCamera ( 0, mouseY );
+					controller.RotateCamera ( mouseX, mouseY );
 			}
 //				controller.RotateCamera ( 0, mouseY );
 			else
