@@ -68,19 +68,23 @@ public class FPSRobotInput : MonoBehaviour
 //			controller.Rotate ( mouseX * Time.deltaTime * controller.hRotateSpeed );
 			if ( isTrainingMode )
 			{
-				if ( mouseX != 0 )
+				bool isRMBDown = Input.GetMouseButton ( 1 );
+				if ( mouseX != 0 && !isRMBDown )
 				{
 					lastMouseTime = Time.time;
 					hMouseMove += 4 * Time.deltaTime * Mathf.Sign ( mouseX );
 					hMouseMove = Mathf.Clamp ( hMouseMove, -1f, 1f );
 				} else
-				if ( Time.time - lastMouseTime > 0.2f )
+				if ( Time.time - lastMouseTime > 0.03f )
 				{
 					hMouseMove = Mathf.MoveTowards ( hMouseMove, 0, Time.deltaTime * 4 );
 				}
-				
+
 				float hMove = Mathf.Clamp ( keyH + hMouseMove, -1f, 1f );
 				controller.Rotate ( hMove );
+
+				if ( isRMBDown )
+					controller.RotateCamera ( 0, mouseY );
 			}
 //				controller.RotateCamera ( 0, mouseY );
 			else
