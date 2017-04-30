@@ -302,7 +302,7 @@ public class RoverController : IRobotController
 			return;
 
 		angle = Mathf.Clamp ( angle, -maxSteering, maxSteering );
-		SteerAngle = angle;
+		SteerAngle = -angle;
 		if ( angle != 0 )
 		{
 			lastSteerInput = angle / maxSteering;
@@ -327,7 +327,7 @@ public class RoverController : IRobotController
 		if ( isFixedTurning || isPickingUp )
 			return;
 		anglePercent = Mathf.Clamp ( anglePercent, -1f, 1f );
-		SteerAngle = anglePercent * maxSteering;
+		SteerAngle = -anglePercent * maxSteering;
 		if ( anglePercent != 0 )
 		{
 			lastSteerInput = anglePercent;
