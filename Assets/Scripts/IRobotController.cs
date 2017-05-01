@@ -121,6 +121,7 @@ public abstract class IRobotController : MonoBehaviour
 				//see how many samples we captured use this to show save percentage in UISystem script
 				TotalSamples = samples.Count;
 				isSaving = true;
+				TireTracks.ClearTracks ();
 				StartCoroutine(WriteSamplesToDisk());
 
 			};

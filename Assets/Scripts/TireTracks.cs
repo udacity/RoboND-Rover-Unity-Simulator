@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TireTracks : MonoBehaviour
 {
+	static event System.Action clearTracksEvent;
+
 	public WheelCollider wheelCollider;
 	public Material material;
 //	public Vector3 forward = Vector3.forward;
@@ -43,6 +45,7 @@ public class TireTracks : MonoBehaviour
 		verts = new List<Vector3> ();
 		triangles = new List<int> ();
 		uvs = new List<Vector2> ();
+		clearTracksEvent += ClearThisTracks;
 	}
 
 	void Update ()
@@ -126,6 +129,21 @@ public class TireTracks : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public static void ClearTracks ()
+	{
+		if ( clearTracksEvent != null )
+			clearTracksEvent ();
+	}
+
+	void ClearThisTracks ()
+	{
+		Debug.Log ( "Clearing tracks on " + name );
+		verts.Clear ();
+		uvs.Clear ();
+		triangles.Clear ();
+		mesh.Clear ();
 	}
 
 	#if UNITY_EDITOR
