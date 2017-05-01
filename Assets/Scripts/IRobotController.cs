@@ -89,6 +89,7 @@ public abstract class IRobotController : MonoBehaviour
 	private Quaternion saved_rotation;
 	float saved_vAngle;
 	System.Action beginRecordCallback;
+	System.Action cancelRecordCallback;
 	public float recordRate = 25;
 	protected float recordTime;
 	float nextRecordTime;
@@ -134,8 +135,9 @@ public abstract class IRobotController : MonoBehaviour
 		}
 		else
 		{
+			cancelRecordCallback = new System.Action ( cancelCallback );
 			beginRecordCallback = saveCallback;
-			SimpleFileBrowser.ShowSaveDialog (OpenFolder, cancelCallback, true, null, "Select Output Folder", "Select");
+			SimpleFileBrowser.ShowSaveDialog (OpenFolder, CancelRecord, true, null, "Select Output Folder", "Select");
 		}
 		return false;
 	}
@@ -364,9 +366,27 @@ public abstract class IRobotController : MonoBehaviour
 	private void OpenFolder(string location)
 	{
 		m_saveLocation = location;
+		try
+		{
+			Debug.Log ("Deleting any previous IMG folder and CSV file..");
+			File.Delete ( Path.Combine ( m_saveLocation, CSVFileName ) );
+			Directory.Delete ( Path.Combine ( m_saveLocation, DirFrames ), true );
+			
+		}
+		catch (System.Exception e)
+		{
+			Debug.LogException ( e );
+			CancelRecord ();
+			return;
+		}
 		Directory.CreateDirectory (Path.Combine(m_saveLocation, DirFrames));
 		if ( beginRecordCallback != null )
 			beginRecordCallback ();
+	}
+
+	void CancelRecord ()
+	{
+		cancelRecordCallback ();
 	}
 
 	private string WriteImage (Camera camera, string prepend, string timestamp)
