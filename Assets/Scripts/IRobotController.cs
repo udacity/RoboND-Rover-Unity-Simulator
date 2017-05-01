@@ -369,8 +369,10 @@ public abstract class IRobotController : MonoBehaviour
 		try
 		{
 			Debug.Log ("Deleting any previous IMG folder and CSV file..");
-			File.Delete ( Path.Combine ( m_saveLocation, CSVFileName ) );
-			Directory.Delete ( Path.Combine ( m_saveLocation, DirFrames ), true );
+			if ( File.Exists ( Path.Combine ( m_saveLocation, CSVFileName ) ) )
+				File.Delete ( Path.Combine ( m_saveLocation, CSVFileName ) );
+			if ( Directory.Exists ( Path.Combine ( m_saveLocation, DirFrames ) ) )
+				Directory.Delete ( Path.Combine ( m_saveLocation, DirFrames ), true );
 			
 		}
 		catch (System.Exception e)
