@@ -144,6 +144,7 @@ public class TireTracks : MonoBehaviour
 		uvs.Clear ();
 		triangles.Clear ();
 		mesh.Clear ();
+		curCount = 0;
 	}
 
 	#if UNITY_EDITOR

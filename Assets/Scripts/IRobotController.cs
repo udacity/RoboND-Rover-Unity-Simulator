@@ -85,6 +85,7 @@ public abstract class IRobotController : MonoBehaviour
 	private Queue<RobotSample> samples;
 	private int TotalSamples;
 	private bool isSaving;
+	public bool IsSaving { get { return isSaving; } }
 	private Vector3 saved_position;
 	private Quaternion saved_rotation;
 	float saved_vAngle;

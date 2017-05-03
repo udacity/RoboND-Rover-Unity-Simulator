@@ -66,6 +66,7 @@ public class FPSRobotInput : MonoBehaviour
 //			if ( keyH != 0 )
 //				controller.Rotate ( keyH );
 //			controller.Rotate ( mouseX * Time.deltaTime * controller.hRotateSpeed );
+			bool isSaving = controller.IsSaving;
 			if ( isTrainingMode )
 			{
 				bool isRMBDown = Input.GetMouseButton ( 1 );
@@ -81,7 +82,8 @@ public class FPSRobotInput : MonoBehaviour
 				}
 
 				float hMove = Mathf.Clamp ( keyH + hMouseMove, -1f, 1f );
-				controller.Rotate ( hMove );
+				if ( !isSaving )
+					controller.Rotate ( hMove );
 
 				if ( isRMBDown )
 					controller.RotateCamera ( mouseX, mouseY );
@@ -127,15 +129,17 @@ public class FPSRobotInput : MonoBehaviour
 //				Debug.Log ( "braking: " + braking);
 
 
-
-				if ( controller.allowSprint )
+				if ( !isSaving )
 				{
-					throttle *= Mathf.Lerp ( 1, controller.sprintMultiplier, Input.GetAxis ( "Sprint" ) );
+					if ( controller.allowSprint )
+					{
+						throttle *= Mathf.Lerp ( 1, controller.sprintMultiplier, Input.GetAxis ( "Sprint" ) );
+					}
+					if ( braking )
+						controller.Move ( 0, Mathf.Abs ( throttle ) );
+					else
+						controller.Move ( throttle, 0 );
 				}
-				if ( braking )
-					controller.Move ( 0, Mathf.Abs ( throttle ) );
-				else
-					controller.Move ( throttle, 0 );
 //				controller.Move ( forward );
 			}
 
