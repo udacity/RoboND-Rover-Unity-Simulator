@@ -25,7 +25,7 @@ public class CommandServer : MonoBehaviour
 	{
 		_socket = GameObject.Find("SocketIO").GetComponent<SocketIOComponent>();
 		_socket.On("open", OnOpen);
-		_socket.On("steer", OnSteer);
+		_socket.On("data", OnData);
 		_socket.On("manual", onManual);
 		_socket.On ( "fixed_turn", OnFixedTurn );
 		_socket.On ( "pickup", OnPickup );
@@ -57,7 +57,7 @@ public class CommandServer : MonoBehaviour
 		EmitTelemetry (obj);
 	}
 
-	void OnSteer(SocketIOEvent obj)
+	void OnData(SocketIOEvent obj)
 	{
 //		Debug.Log ( "Steer" );
 		JSONObject jsonObject = obj.data;
