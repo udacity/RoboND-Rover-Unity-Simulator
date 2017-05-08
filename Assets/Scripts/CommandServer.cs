@@ -74,8 +74,8 @@ public class CommandServer : MonoBehaviour
 		Texture2D tex = new Texture2D ( 1, 1 );
 		string imageInfo = "";
 		byte[] imageBytes = null;
-		if ( jsonObject.HasField ( "inset_image" ) )
-			imageInfo = jsonObject.GetField ( "inset_image" ).str;
+		if ( jsonObject.HasField ( "inset_image1" ) )
+			imageInfo = jsonObject.GetField ( "inset_image1" ).str;
 		if ( !string.IsNullOrEmpty ( imageInfo ) )
 			imageBytes = Convert.FromBase64String ( imageInfo );
 		if ( imageBytes != null && imageBytes.Length != 0 )
