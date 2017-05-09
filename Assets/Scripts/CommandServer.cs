@@ -37,14 +37,6 @@ public class CommandServer : MonoBehaviour
 		inset3Tex = new Texture2D ( 1, 1 );
 	}
 
-/*	void Update ()
-	{
-		if ( Input.GetKeyDown ( KeyCode.P ) )
-		{
-			GetSamplePositions ( null );
-		}
-	}*/
-
 	void OnOpen(SocketIOEvent obj)
 	{
 //		Debug.Log("Connection Open");

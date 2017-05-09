@@ -31,10 +31,10 @@ public class ComplexQuadController : MonoBehaviour
 
 	void LateUpdate ()
 	{
-		if ( Input.GetKeyDown ( KeyCode.Escape ) )
+		if ( Input.GetButtonDown ( "Quit" ) )
 			Application.Quit ();
 
-		if ( Input.GetKeyDown ( KeyCode.R ) )
+		if ( Input.GetButtonDown ( "Quad Reorient" ) )
 		{
 			ResetOrientation ();
 		}

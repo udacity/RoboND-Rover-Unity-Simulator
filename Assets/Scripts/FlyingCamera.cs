@@ -22,8 +22,8 @@ public class FlyingCamera : MonoBehaviour
 		Vector3 move = new Vector3 ( Input.GetAxis ( "Horizontal" ), Input.GetAxis ( "Climb_Descend" ), Input.GetAxis ( "Vertical" ) );
 		Vector2 rotation = new Vector2 ( Input.GetAxis ( "Mouse X" ), Input.GetAxis ( "Mouse Y" ) );
 
-
-		if ( Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift ) )
+		if ( Input.GetButtonDown ( "Sprint" ) )
+//		if ( Input.GetKey ( KeyCode.LeftShift ) || Input.GetKey ( KeyCode.RightShift ) )
 			move *= sprintFactor;
 		move = transform.TransformDirection ( move );
 		rb.velocity = move * moveSpeed;
@@ -33,12 +33,12 @@ public class FlyingCamera : MonoBehaviour
 		transform.Rotate ( Vector3.up * rotation.x * rotationSpeed * Time.deltaTime, Space.World );
 		transform.Rotate ( Vector3.right * -rotation.y * rotationSpeed * Time.deltaTime, Space.Self );
 
-		if ( Input.GetKeyDown ( KeyCode.Escape ) )
+		if ( Input.GetButtonDown ( "Unfocus" ) )
 		{
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 		}
-		if ( Input.GetMouseButtonDown ( 0 ) )
+		if ( Input.GetButtonDown ( "Focus / Pickup" ) )
 		{
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;

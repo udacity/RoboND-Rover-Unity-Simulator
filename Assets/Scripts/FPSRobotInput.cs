@@ -34,12 +34,12 @@ public class FPSRobotInput : MonoBehaviour
 	void LateUpdate ()
 	{
 		// check for close app
-		if ( Input.GetKeyDown ( KeyCode.F12 ) )
+		if ( Input.GetButtonDown ( "Quit" ) )
 		{
 			Application.Quit ();
 		}
 
-		if ( Input.GetKeyDown ( KeyCode.G ) )
+		if ( Input.GetButtonDown ( "Grid" ) )
 		{
 			if ( grid != null )
 				grid.enabled = !grid.enabled;
@@ -149,11 +149,11 @@ public class FPSRobotInput : MonoBehaviour
 //			}
 
 			// check for camera switch key
-			if ( Input.GetKeyDown ( KeyCode.Tab ) )
+			if ( Input.GetButtonDown ( "Switch Camera" ) )
 				controller.SwitchCamera ();
 
 			// check for unfocus input
-			if ( Input.GetKeyDown ( KeyCode.Escape ) )
+			if ( Input.GetButtonDown ( "Unfocus" ) )
 			{
 				Unfocus ();
 				return;
@@ -181,7 +181,7 @@ public class FPSRobotInput : MonoBehaviour
 			braking = false;
 		}
 		// check for sample pickup
-		if ( Input.GetKeyDown ( KeyCode.Return ) || Input.GetKeyDown ( KeyCode.KeypadEnter ) )
+		if ( Input.GetButtonDown ( "Sample Pickup" ) || Input.GetButtonDown ( "Focus / Pickup" ) )
 		{
 			if ( controllable && controller.IsNearObjective )
 			{
@@ -189,22 +189,22 @@ public class FPSRobotInput : MonoBehaviour
 			}
 		}
 		// check for focus input
-		if ( Input.GetMouseButtonDown ( 0 ) )
+		if ( Input.GetButtonDown ( "Focus / Pickup" ) )
 		{
-			if ( controllable && controller.IsNearObjective )
-			{
-				controller.PickupObjective ( OnPickedUpObjective );
-			}
-
 			Focus ();
 		}
-		if ( Input.GetKeyDown ( KeyCode.Escape ) )
+		if ( Input.GetButtonDown ( "Unfocus" ) )
 		{
 			if ( controllable )
 				Unfocus ();
-			else
-				Focus ();
 		}
+//		if ( Input.GetKeyDown ( KeyCode.Escape ) )
+//		{
+//			if ( controllable )
+//				Unfocus ();
+//			else
+//				Focus ();
+//		}
 	}
 
 	public void Focus ()

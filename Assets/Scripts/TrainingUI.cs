@@ -49,7 +49,7 @@ public class TrainingUI : MonoBehaviour
 		if ( Input.GetButtonDown ( "Record" ) )
 			ToggleRecording ();
 
-		if ( Input.GetKeyDown ( KeyCode.C ) )
+		if ( Input.GetButtonDown ( "Toggle Robocam Image" ) )
 		{
 			roboCamAlpha = 1 - roboCamAlpha;
 			roboCamImage.CrossFadeAlpha ( roboCamAlpha, 0.35f, false );

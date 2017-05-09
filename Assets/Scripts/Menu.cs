@@ -25,7 +25,7 @@ public class Menu : MonoBehaviour
 
 	void LateUpdate ()
 	{
-		if ( Input.GetKeyDown ( KeyCode.F1 ) )
+		if ( Input.GetButtonDown ( "Menu" ) )
 		{
 			UnityEngine.SceneManagement.SceneManager.LoadScene ( UnityEngine.SceneManagement.SceneManager.GetActiveScene ().name );
 		}
