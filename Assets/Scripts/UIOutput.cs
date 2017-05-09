@@ -39,6 +39,7 @@ public class UIOutput : MonoBehaviour
 		float steer = controller.SteerAngle;
 		float vAngle = controller.VerticalAngle;
 		float throttle = controller.ThrottleInput;
+		float brake = controller.BrakeInput;
 		Vector2 position = new Vector2 ( controller.Position.x, controller.Position.z );
 //		Vector3 position = controller.Position;
 		float pitch = controller.Pitch;
@@ -48,6 +49,7 @@ public class UIOutput : MonoBehaviour
 		float roll = controller.Roll;
 
 		sb.Append ( "Throttle: " + throttle.ToString ( "F1" ) + "\n" );
+		sb.Append ( "Brake: " + brake.ToString ( "F1" ) + "\n" );
 		sb.Append ( "Steer angle: " + steer.ToString ( "F4" ) + "\n" );
 		sb.Append ( "Ground speed: " + speed.ToString ( "F1" ) + "m/s\n" );
 		sb.Append ( "Position: " + position.ToString () + "\n" );
