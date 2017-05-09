@@ -25,6 +25,8 @@ public class RobotRemoteControl : MonoBehaviour
 
 	void LateUpdate ()
 	{
+		if ( manualInput.controllable )
+			return;
 		if ( robot.IsTurningInPlace )
 			return;
 		float throttle = ThrottleInput;

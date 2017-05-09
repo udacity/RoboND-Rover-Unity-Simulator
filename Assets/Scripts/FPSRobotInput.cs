@@ -53,6 +53,12 @@ public class FPSRobotInput : MonoBehaviour
 
 		if ( DisableFocus )
 			return;
+
+		bool tempControl = false;
+		if ( !isTrainingMode )
+		{
+			controllable = tempControl = Input.GetButton ( "Vertical" ) || Input.GetButton ( "Horizontal" );
+		}
 		
 		// check if we're not focused on our robot
 		if ( controllable )
@@ -60,14 +66,9 @@ public class FPSRobotInput : MonoBehaviour
 			// check for rotation input
 			float mouseX = Input.GetAxis ( "Mouse X" );
 			float mouseY = Input.GetAxis ( "Mouse Y" );
-//			if ( mouseX != 0 )
-//				controller.Rotate ( mouseX );
 			float keyH = Input.GetAxis ( "Horizontal" );
-//			if ( keyH != 0 )
-//				controller.Rotate ( keyH );
-//			controller.Rotate ( mouseX * Time.deltaTime * controller.hRotateSpeed );
 			bool isSaving = controller.IsSaving;
-			if ( isTrainingMode )
+			if ( isTrainingMode || tempControl )
 			{
 				bool isRMBDown = Input.GetMouseButton ( 1 );
 				if ( mouseX != 0 && !isRMBDown )

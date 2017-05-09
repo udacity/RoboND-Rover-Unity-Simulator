@@ -12,6 +12,7 @@ public class TrainingUI : MonoBehaviour
 
 	public RectTransform trainingArea;
 	public RectTransform rightArea;
+	public Text trainingText;
 	public Text saveStatus;
 	public Text recordStatus;
 	public RawImage roboCamImage;
@@ -22,6 +23,7 @@ public class TrainingUI : MonoBehaviour
 	float roboCamAlpha = 1;
 	bool recording;
 	bool saveRecording;
+	bool hadControl;
 
 	void Awake ()
 	{
@@ -53,6 +55,27 @@ public class TrainingUI : MonoBehaviour
 		{
 			roboCamAlpha = 1 - roboCamAlpha;
 			roboCamImage.CrossFadeAlpha ( roboCamAlpha, 0.35f, false );
+		}
+	}
+
+	IEnumerator CheckManualMode ()
+	{
+		while ( !isTrainingMode )
+		{
+			if ( robotInput.controllable != hadControl )
+			{
+				hadControl = robotInput.controllable;
+				if ( robotInput.controllable )
+				{
+					trainingText.text = "Manual mode!";
+					trainingText.color = Color.green;
+				} else
+				{
+					trainingText.text = "Autonomous mode!";
+					trainingText.color = Color.red;
+				}
+			}
+			yield return null;
 		}
 	}
 
@@ -106,7 +129,10 @@ public class TrainingUI : MonoBehaviour
 	public void SetTrainingMode (bool training)
 	{
 		isTrainingMode = training;
-		trainingArea.gameObject.SetActive ( isTrainingMode );
+		saveStatus.enabled = recordStatus.enabled = isTrainingMode;
+		trainingText.text = isTrainingMode ? "Training mode!" : "Autonomous Mode!";
+		trainingText.color = Color.red;
+//		trainingArea.gameObject.SetActive ( isTrainingMode );
 		rightArea.gameObject.SetActive ( isTrainingMode );
 		enabled = isTrainingMode;
 		robotInput.isTrainingMode = training;
@@ -116,5 +142,8 @@ public class TrainingUI : MonoBehaviour
 		inset2Tex.CrossFadeAlpha ( 0, 0, true );
 		inset3Tex.enabled = !training;
 		inset3Tex.CrossFadeAlpha ( 0, 0, true );
+		StopAllCoroutines ();
+		if ( !training )
+			StartCoroutine ( CheckManualMode () );
 	}
 }
