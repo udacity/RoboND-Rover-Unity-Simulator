@@ -457,7 +457,6 @@ public class RoverController : IRobotController
 		rb.isKinematic = true;
 //		pickupCallback = onPickup;
 		isPickingUp = true;
-		IsPickingUpSample = isPickingUp;
 		armActuator.enabled = true;
 //		Time.timeScale = 0.2f;
 //		PickupProgress = 0;
@@ -466,7 +465,11 @@ public class RoverController : IRobotController
 //			GetSample ( true );
 			TriggerPickup ();
 		}
-		StartCoroutine ( DoPickup () );
+		if (!IsPickingUpSample)
+		{
+			StartCoroutine ( DoPickup () );
+		}
+		IsPickingUpSample = isPickingUp;
 	}
 
 	IEnumerator DoPickup ()
