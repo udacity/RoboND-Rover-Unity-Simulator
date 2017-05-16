@@ -190,8 +190,11 @@ public class CommandServer : MonoBehaviour
 				sample_x.Append ( go.transform.position.x.ToString ("N2") + "," );
 				sample_y.Append ( go.transform.position.z.ToString ("N2") + "," );
 			}
-			sample_x.Remove (sample_x.Length - 1, 1);
-			sample_y.Remove (sample_y.Length - 1, 1);
+			if (ObjectiveSpawner.samples.Length != 0)
+			{
+				sample_x.Remove (sample_x.Length - 1, 1);
+				sample_y.Remove (sample_y.Length - 1, 1);
+			}
 			data["samples_x"] = sample_x.ToString ();
 			data["samples_y"] = sample_y.ToString ();
 			data["image"] = Convert.ToBase64String(CameraHelper.CaptureFrame(frontFacingCamera));
