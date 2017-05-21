@@ -57,7 +57,8 @@ public class UIOutput : MonoBehaviour
 		sb.Append ( "Yaw angle: " + yaw.ToString ( "F2" ) + "\n" );
 		sb.Append ( "Roll angle: " + roll.ToString ( "F2" ) + "\n" );
 //		sb.Append ( "Camera zoom: " + controller.Zoom.ToString ( "F1" ) + "x\n" );
-		sb.Append ( "Is near objective: " + ( controller.IsNearObjective ? "Yes" : "No" ) );
+		sb.Append ( "Is near objective: " + ( controller.IsNearObjective ? "Yes" : "No" ) + "\n" );
+		sb.Append ( "Is picking up:" + ( controller.IsPickingUpSample ? "Yes" : "No" ) );
 		infoText.text = sb.ToString ();
 
 		if ( controller.PickupProgress != -1 )

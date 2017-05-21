@@ -448,6 +448,9 @@ public class RoverController : IRobotController
 
 	public override void PickupObjective (System.Action<PickupSample> onPickup)
 	{
+		if ( IsPickingUpSample )
+			return;
+		
 		// step 1: find pickup position
 		// step 2: actuate arm toward pickup
 		// 2a. rotate shoulder, arm, piston
@@ -457,6 +460,7 @@ public class RoverController : IRobotController
 		rb.isKinematic = true;
 //		pickupCallback = onPickup;
 		isPickingUp = true;
+		IsPickingUpSample = isPickingUp;
 		armActuator.enabled = true;
 //		Time.timeScale = 0.2f;
 //		PickupProgress = 0;
@@ -465,11 +469,7 @@ public class RoverController : IRobotController
 //			GetSample ( true );
 			TriggerPickup ();
 		}
-		if (!IsPickingUpSample)
-		{
-			StartCoroutine ( DoPickup () );
-		}
-		IsPickingUpSample = isPickingUp;
+		StartCoroutine ( DoPickup () );
 	}
 
 	IEnumerator DoPickup ()
@@ -584,8 +584,10 @@ public class RoverController : IRobotController
 		}
 //		yield return new WaitForSeconds ( 6 );
 		isPickingUp = false;
-		IsPickingUpSample = isPickingUp;
+		IsPickingUpSample = false;
 		rb.isKinematic = false;
+		IsNearObjective = false;
+		curObjective = null;
 //		PickupProgress = -1;
 		if ( IsRecording )
 		{
