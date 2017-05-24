@@ -1,4 +1,6 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 Shader "Custom/Lines" {
 
 	Properties {
@@ -44,7 +46,7 @@ Shader "Custom/Lines" {
 			// VERTEX SHADER
 			vertexOutput vert(vertexInput input) {
 				vertexOutput output;
-				output.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+				output.pos = UnityObjectToClipPos(input.vertex);
 				// Calculate the world position coordinates to pass to the fragment shader
 //				output.worldPos = mul(unity_ObjectToWorld, input.vertex);
 				output.worldPos = input.vertex;
