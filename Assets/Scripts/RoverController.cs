@@ -587,7 +587,6 @@ public class RoverController : IRobotController
 		IsPickingUpSample = false;
 		rb.isKinematic = false;
 		IsNearObjective = false;
-		curObjective = null;
 //		PickupProgress = -1;
 		if ( IsRecording )
 		{
@@ -596,7 +595,7 @@ public class RoverController : IRobotController
 		}
 		if ( !getSaveStatus () )
 			ObjectiveSpawner.RemoveSample ( curObjective.gameObject );
-		yield break;
+		curObjective = null;
 	}
 
 	Vector3 GetPositionOnFlatbed ()
