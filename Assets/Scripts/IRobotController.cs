@@ -42,6 +42,7 @@ public abstract class IRobotController : MonoBehaviour
 	public virtual void FixedTurn (float angle, float time) {}
 	public virtual void Stop () {}
 
+	public string csvSeparatorChar = ",";
 	public Transform robotBody;
 	public Transform cameraHAxis;
 	public Transform cameraVAxis;
@@ -151,11 +152,17 @@ public abstract class IRobotController : MonoBehaviour
 		string newLine = "\n";
 		if ( Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer )
 			newLine = "\r\n";
-		
+
+		if ( string.IsNullOrEmpty ( csvSeparatorChar ) )
+		{
+			Debug.LogWarning ( "Warning: empty/null separator. using `,`" );
+			csvSeparatorChar = ",";
+		}
 		yield return null;
 		if ( samples.Count > 0 )
 		{
-			string row = "Path,SteerAngle,Throttle,Brake,Speed,X_Position,Y_Position,Pitch,Yaw,Roll" + newLine;
+			string row = "Path" + csvSeparatorChar + "SteerAngle" + csvSeparatorChar + "Throttle" + csvSeparatorChar + "Brake" + csvSeparatorChar + "Speed" + csvSeparatorChar + "X_Position" +
+				csvSeparatorChar + "Y_Position" + csvSeparatorChar + "Pitch" + csvSeparatorChar + "Yaw" + csvSeparatorChar + "Roll" + newLine;
 			File.AppendAllText (Path.Combine (m_saveLocation, CSVFileName), row);
 
 			ObjectiveSpawner.SetInitialPositions ();
@@ -195,8 +202,8 @@ public abstract class IRobotController : MonoBehaviour
 				}
 				string camPath = WriteImage ( recordingCam, "robocam", sample.timestamp );
 
-				row = camPath + "," + sample.steerAngle + "," + sample.throttle + "," + sample.brake + "," + sample.speed + "," +
-					sample.position.x + "," + sample.position.z + "," + sample.pitch + "," + sample.yaw + "," + sample.roll + newLine;
+				row = camPath + csvSeparatorChar + sample.steerAngle + csvSeparatorChar + sample.throttle + csvSeparatorChar + sample.brake + csvSeparatorChar + sample.speed + csvSeparatorChar +
+					sample.position.x + csvSeparatorChar + sample.position.z + csvSeparatorChar + sample.pitch + csvSeparatorChar + sample.yaw + csvSeparatorChar + sample.roll + newLine;
 				File.AppendAllText (Path.Combine (m_saveLocation, CSVFileName), row);
 
 				yield return null;
@@ -213,47 +220,6 @@ public abstract class IRobotController : MonoBehaviour
 			Rotate ( 0 );
 			RotateCamera ( 0, 0 );
 		}
-
-/*		yield return new WaitForSeconds(0.000f); //retrieve as fast as we can but still allow communication of main thread to screen and UISystem
-		if (samples.Count > 0) {
-			//pull off a sample from the que
-			RobotSample sample = samples.Dequeue();
-
-			//pysically moving the car to get the right camera position
-			transform.position = sample.position;
-			transform.rotation = sample.rotation;
-//			Vector3 euler = cameraVAxis.localEulerAngles;
-//			euler.x = sample.verticalAngle;
-//			cameraVAxis.localEulerAngles = euler;
-
-			// Capture and Persist Image
-			string camPath = WriteImage ( recordingCam, "robocam", sample.timestamp );
-
-			string row = camPath + "," + sample.steerAngle + "," + sample.throttle + "," + sample.brake + "," + sample.speed + "," +
-				sample.position.x + "," + sample.position.y + "," + sample.position.z + "," + sample.yaw + "\r\n";
-//			string row = string.Format ("{0},{1},{2},{3},{4},{5},{6}\n", centerPath, leftPath, rightPath, sample.steeringAngle, sample.throttle, sample.brake, sample.speed);
-			File.AppendAllText (Path.Combine (m_saveLocation, CSVFileName), row);
-		}
-		if (samples.Count > 0) {
-			//request if there are more samples to pull
-			StartCoroutine(WriteSamplesToDisk()); 
-		}
-		else 
-		{
-			//all samples have been pulled
-			StopCoroutine(WriteSamplesToDisk());
-			isSaving = false;
-
-			//need to reset the car back to its position before ending recording, otherwise sometimes the car ended up in strange areas
-			transform.position = saved_position;
-			transform.rotation = saved_rotation;
-			Vector3 euler = cameraVAxis.localEulerAngles;
-			euler.x = saved_vAngle;
-			cameraVAxis.localEulerAngles = euler;
-			Move ( 0 );
-			Rotate ( 0 );
-			RotateCamera ( 0, 0 );
-		}*/
 	}
 
 	public float getSavePercent()
