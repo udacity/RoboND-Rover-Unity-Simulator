@@ -425,6 +425,7 @@ public class RoverController : IRobotController
 
 	public override void SwitchCamera ()
 	{
+		Debug.Log ( "switching camera" );
 		if ( curCamera == 0 )
 		{
 			curCamera = 1;
