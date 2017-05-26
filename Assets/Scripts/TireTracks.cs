@@ -28,6 +28,16 @@ public class TireTracks : MonoBehaviour
 	List<Vector2> uvs;
 	int curCount;
 
+	void OnEnable ()
+	{
+		clearTracksEvent += ClearThisTracks;
+	}
+
+	void OnDisable ()
+	{
+		clearTracksEvent -= ClearThisTracks;
+	}
+
 	void Awake ()
 	{
 		GameObject tracks = new GameObject ( "Tracks" );
@@ -45,7 +55,6 @@ public class TireTracks : MonoBehaviour
 		verts = new List<Vector3> ();
 		triangles = new List<int> ();
 		uvs = new List<Vector2> ();
-		clearTracksEvent += ClearThisTracks;
 	}
 
 	void Update ()
