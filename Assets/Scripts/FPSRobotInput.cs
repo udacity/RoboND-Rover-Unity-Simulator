@@ -166,9 +166,15 @@ public class FPSRobotInput : MonoBehaviour
 		{
 			if ( !isTrainingMode )
 			{
+				if ( Input.GetMouseButtonDown ( 1 ) )
+					Focus ();
+				else
+				if ( Input.GetMouseButtonUp ( 1 ) )
+					Unfocus ();
 				// check for rotation input
 				float mouseX = Input.GetAxis ( "Mouse X" );
 				float mouseY = Input.GetAxis ( "Mouse Y" );
+				if ( Input.GetMouseButton ( 1 ) )
 					controller.RotateCamera ( mouseX, mouseY );
 				// check for camera zoom
 				float wheel = Input.GetAxis ( "Mouse ScrollWheel" );
@@ -182,22 +188,26 @@ public class FPSRobotInput : MonoBehaviour
 			braking = false;
 		}
 		// check for sample pickup
-		if ( Input.GetButtonDown ( "Sample Pickup" ) || Input.GetButtonDown ( "Focus / Pickup" ) )
+		if ( isTrainingMode )
 		{
-			if ( controllable && controller.IsNearObjective )
+			if ( Input.GetButtonDown ( "Sample Pickup" ) || Input.GetButtonDown ( "Focus / Pickup" ) )
 			{
-				controller.PickupObjective ( OnPickedUpObjective );
+				if ( controllable && controller.IsNearObjective )
+				{
+					controller.PickupObjective ( OnPickedUpObjective );
+				}
 			}
-		}
-		// check for focus input
-		if ( Input.GetButtonDown ( "Focus / Pickup" ) )
-		{
-			Focus ();
-		}
-		if ( Input.GetButtonDown ( "Unfocus" ) )
-		{
-			if ( controllable )
+			
+			// check for focus input
+			if ( Input.GetButtonDown ( "Focus / Pickup" ) )
+			{
+				Focus ();
+			}
+			if ( Input.GetButtonDown ( "Unfocus" ) )
+			{
+//				if ( controllable )
 				Unfocus ();
+			}
 		}
 //		if ( Input.GetKeyDown ( KeyCode.Escape ) )
 //		{
@@ -211,7 +221,8 @@ public class FPSRobotInput : MonoBehaviour
 	public void Focus ()
 	{
 		Cursor.lockState = CursorLockMode.Locked;
-		controllable = true;
+		if ( isTrainingMode )
+			controllable = true;
 	}
 
 	public void Unfocus ()
