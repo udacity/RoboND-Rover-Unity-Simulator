@@ -172,7 +172,7 @@ public class CommandServer : MonoBehaviour
 			data["brake"] = robotController.BrakeInput.ToString ("N4");
 			data["speed"] = robotController.Speed.ToString("N4");
 			Vector3 pos = robotController.Position;
-			data["position"] = pos.x.ToString ("N4") + "," + pos.z.ToString ("N4");
+			data["position"] = pos.x.ToString ("N4") + robotController.csvSeparatorChar + pos.z.ToString ("N4");
 			data["pitch"] = robotController.Pitch.ToString ("N4");
 			// new: convert the angle to CCW, x-based
 			data["yaw"] = IRobotController.ConvertAngleToCCWXBased ( robotController.Yaw ).ToString ("N4");
@@ -187,8 +187,8 @@ public class CommandServer : MonoBehaviour
 			for (int i = 0; i <ObjectiveSpawner.samples.Length; i++)
 			{
 				GameObject go = ObjectiveSpawner.samples[i];
-				sample_x.Append ( go.transform.position.x.ToString ("N2") + "," );
-				sample_y.Append ( go.transform.position.z.ToString ("N2") + "," );
+				sample_x.Append ( go.transform.position.x.ToString ("N2") + robotController.csvSeparatorChar );
+				sample_y.Append ( go.transform.position.z.ToString ("N2") + robotController.csvSeparatorChar );
 			}
 			if (ObjectiveSpawner.samples.Length != 0)
 			{
