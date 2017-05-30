@@ -60,6 +60,9 @@ public class CommandServer : MonoBehaviour
 		else
 			robotRemoteControl.BrakeInput = 0;
 
+		// testing memory leak
+		return;
+
 		// try to load image1
 		bool loaded = false;
 		Vector2 size = Vector2.zero;

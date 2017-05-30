@@ -46,7 +46,6 @@ public class WalkerController : IRobotController
 
 	Vector3 point1, point2;
 	float radius;
-	bool isPickingUp;
 
 	Queue<GameObject> footprints;
 	Transform footprintParent;
@@ -90,7 +89,7 @@ public class WalkerController : IRobotController
 		animator.SetFloat ( "Vertical", moveInput );
 		bodyCollider.material = moveInput == 0 ? idleMaterial : movingMaterial;
 
-		if ( !isPickingUp )
+		if ( !IsPickingUpSample )
 		{
 			// check for objectives. only if not already picking one up
 			// start by building a capsule of the player's size
@@ -174,7 +173,7 @@ public class WalkerController : IRobotController
 		} else
 		{
 			curCamera = 0;
-			if ( isPickingUp )
+			if ( IsPickingUpSample )
 				actualCamera.SetParent ( head, false );
 			else
 				actualCamera.SetParent ( fpsPosition, false );
@@ -192,7 +191,7 @@ public class WalkerController : IRobotController
 			return;
 
 		pickupCallback = onPickup;
-		isPickingUp = true;
+		IsPickingUpSample = true;
 		animator.SetTrigger ( "Pickup" );
 		animator.SetIKPosition ( AvatarIKGoal.LeftHand, curObjective.transform.position );
 		animator.SetIKPositionWeight ( AvatarIKGoal.LeftHand, 1 );
@@ -211,7 +210,7 @@ public class WalkerController : IRobotController
 		curObjective = null;
 		IsNearObjective = false;
 		animator.SetIKPositionWeight ( AvatarIKGoal.LeftHand, 0 );
-		isPickingUp = false;
+		IsPickingUpSample = false;
 		if ( curCamera == 0 )
 			actualCamera.SetParent ( fpsPosition, false );
 	}

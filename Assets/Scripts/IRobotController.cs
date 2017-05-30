@@ -182,6 +182,7 @@ public abstract class IRobotController : MonoBehaviour
 						badPickupCount++;
 					} while ( !sample.stopPickup && samples.Count > 0 && i < count );
 					isPickingUp = false;
+					IsPickingUpSample = false;
 				}
 				sample = samples.Dequeue ();
 				transform.position = sample.position;
@@ -199,6 +200,7 @@ public abstract class IRobotController : MonoBehaviour
 				{
 					Debug.Log ( "STOP!!" );
 					isPickingUp = false;
+					IsPickingUpSample = false;
 				}
 				string camPath = WriteImage ( recordingCam, "robocam", sample.timestamp );
 

@@ -51,7 +51,7 @@ public class RoverController : IRobotController
 
 	bool isMotorInput;
 	bool isSteeringInput;
-	bool isPickingUp;
+//	bool isPickingUp;
 	bool grabbingObject;
 	bool isTurningInPlace;
 	bool isFixedTurning;
@@ -203,9 +203,9 @@ public class RoverController : IRobotController
 	void Update ()
 	{
 		if ( IsRecording )// && !isPickingUp )
-			GetSample ( isPickingUp );
+			GetSample ( IsPickingUpSample );
 		
-		if ( !isPickingUp && !getSaveStatus () )
+		if ( !IsPickingUpSample && !getSaveStatus () )
 		{
 			// check for objectives. only if not already picking one up
 			// start by building a capsule of the player's size
@@ -268,7 +268,7 @@ public class RoverController : IRobotController
 
 	public override void Move (float throttle, float brake)
 	{
-		if ( isFixedTurning || isPickingUp )
+		if ( isFixedTurning || IsPickingUpSample )
 			return;
 		ThrottleInput = throttle;
 		BrakeInput = brake;
@@ -276,13 +276,13 @@ public class RoverController : IRobotController
 		lastBrakeInput = brake;
 //		Debug.Log ( "throt: " + lastMoveInput + " brake: " + lastBrakeInput );
 		isMotorInput = throttle != 0 || brake != 0;
-		if ( isMotorInput && !isPickingUp )
+		if ( isMotorInput && !IsPickingUpSample )
 			armActuator.enabled = false;
 	}
 
 	public override void Move (float input)
 	{
-		if ( isFixedTurning || isPickingUp )
+		if ( isFixedTurning || IsPickingUpSample )
 			return;
 		ThrottleInput = input;
 		lastMoveInput = input; // * acceleration;
@@ -298,7 +298,7 @@ public class RoverController : IRobotController
 	// provide input in angle
 	public override void RotateRaw (float angle)
 	{
-		if ( isFixedTurning || isPickingUp )
+		if ( isFixedTurning || IsPickingUpSample )
 			return;
 
 		angle = Mathf.Clamp ( angle, -maxSteering, maxSteering );
@@ -310,7 +310,7 @@ public class RoverController : IRobotController
 			lastAngle = angle;
 			lastAngle = Mathf.Clamp ( lastAngle, -maxSteering, maxSteering );
 			isSteeringInput = true;
-			if ( !isPickingUp )
+			if ( !IsPickingUpSample )
 				armActuator.enabled = false;
 		} else
 		{
@@ -324,7 +324,7 @@ public class RoverController : IRobotController
 	// provide input in percent
 	public override void Rotate (float anglePercent)
 	{
-		if ( isFixedTurning || isPickingUp )
+		if ( isFixedTurning || IsPickingUpSample )
 			return;
 		anglePercent = Mathf.Clamp ( anglePercent, -1f, 1f );
 		SteerAngle = -anglePercent * maxSteering;
@@ -335,7 +335,7 @@ public class RoverController : IRobotController
 			lastAngle = anglePercent * maxSteering;
 			lastAngle = Mathf.Clamp ( lastAngle, -maxSteering, maxSteering );
 			isSteeringInput = true;
-			if ( !isPickingUp )
+			if ( !IsPickingUpSample )
 				armActuator.enabled = false;
 
 		} else
@@ -459,9 +459,7 @@ public class RoverController : IRobotController
 		// step 3: close claw on pickup
 		rb.velocity = Vector3.zero;
 		rb.isKinematic = true;
-//		pickupCallback = onPickup;
-		isPickingUp = true;
-		IsPickingUpSample = isPickingUp;
+		IsPickingUpSample = true;
 		armActuator.enabled = true;
 //		Time.timeScale = 0.2f;
 //		PickupProgress = 0;
@@ -584,7 +582,6 @@ public class RoverController : IRobotController
 			t += Time.deltaTime;
 		}
 //		yield return new WaitForSeconds ( 6 );
-		isPickingUp = false;
 		IsPickingUpSample = false;
 		rb.isKinematic = false;
 		IsNearObjective = false;
