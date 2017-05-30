@@ -460,6 +460,7 @@ public class RoverController : IRobotController
 		rb.velocity = Vector3.zero;
 		rb.isKinematic = true;
 		IsPickingUpSample = true;
+		Debug.Log ( "Pickup!" );
 		armActuator.enabled = true;
 //		Time.timeScale = 0.2f;
 //		PickupProgress = 0;
@@ -582,9 +583,9 @@ public class RoverController : IRobotController
 			t += Time.deltaTime;
 		}
 //		yield return new WaitForSeconds ( 6 );
-		IsPickingUpSample = false;
+//		IsPickingUpSample = false;
 		rb.isKinematic = false;
-		IsNearObjective = false;
+//		IsNearObjective = false;
 //		PickupProgress = -1;
 		if ( IsRecording )
 		{
@@ -593,7 +594,10 @@ public class RoverController : IRobotController
 		}
 		if ( !getSaveStatus () )
 			ObjectiveSpawner.RemoveSample ( curObjective.gameObject );
+		IsNearObjective = false;
 		curObjective = null;
+		yield return null;
+		IsPickingUpSample = false;
 	}
 
 	Vector3 GetPositionOnFlatbed ()

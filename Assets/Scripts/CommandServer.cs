@@ -208,6 +208,7 @@ public class CommandServer : MonoBehaviour
 			data["fixed_turn"] = robotController.IsTurningInPlace ? "1" : "0";
 			data["near_sample"] = robotController.IsNearObjective ? "1" : "0";
 			data["picking_up"] = robotController.IsPickingUpSample ? "1" : "0";
+			Debug.Log ("picking_up is " + robotController.IsPickingUpSample);
 			data["sample_count"] = ObjectiveSpawner.samples.Length.ToString ();
 
 			StringBuilder sample_x = new StringBuilder ();
