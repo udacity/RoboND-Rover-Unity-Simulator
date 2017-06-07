@@ -460,7 +460,6 @@ public class RoverController : IRobotController
 		rb.velocity = Vector3.zero;
 		rb.isKinematic = true;
 		IsPickingUpSample = true;
-		Debug.Log ( "Pickup!" );
 		armActuator.enabled = true;
 //		Time.timeScale = 0.2f;
 //		PickupProgress = 0;
