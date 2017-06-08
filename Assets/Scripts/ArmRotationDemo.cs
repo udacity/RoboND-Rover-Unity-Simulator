@@ -142,12 +142,12 @@ public class ArmRotationDemo : MonoBehaviour
 		GUI.color = Color.red;
 		GUI.Label ( new Rect ( screenPos - size, size * 2 ), "x" );
 
-		GUI.color = Color.blue;
+		GUI.color = Color.green;
 		screenPos = cam.WorldToScreenPoint ( tips[1].position );
 		screenPos.y = Screen.height - screenPos.y - 10;
 		GUI.Label ( new Rect ( screenPos - size, size * 2 ), "y" );
 
-		GUI.color = Color.green;
+		GUI.color = Color.blue;
 		screenPos = cam.WorldToScreenPoint ( tips[2].position );
 		screenPos.y = Screen.height - screenPos.y - 10;
 		GUI.Label ( new Rect ( screenPos - size, size * 2 ), "z" );
